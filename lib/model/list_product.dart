@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/widgets.dart';
+
 class ListProduct {
   String id;
   String name;
@@ -10,6 +11,7 @@ class ListProduct {
   double discount;
   double size;
   Color colors;
+  String category; // Added category
 
   ListProduct({
     required this.id,
@@ -21,6 +23,7 @@ class ListProduct {
     required this.discount,
     required this.size,
     required this.colors,
+    required this.category, // Added category
   });
 }
 
@@ -31,10 +34,11 @@ List<ListProduct> productlist = [
     image: 'https://i.pinimg.com/736x/f7/06/0d/f7060d1110f63d2d18a3fcb4ac77a33e.jpg',
     rate: 4.5,
     price: 59.99,
-    descriptions: 'Comfortable and stylish sneakers for everyday wear.',
+    descriptions: 'Comfortable and stylish sneakers for everyday wear.Comfortable and stylish sneakers for everyday wearComfortable and stylish sneakers for everyday wearComfortable and stylish sneakers for everyday wear',
     discount: 10.0,
     size: 42.0,
     colors: Color(0xFF2196F3),
+    category: 'Sneakers',
   ),
   ListProduct(
     id: '2',
@@ -46,6 +50,7 @@ List<ListProduct> productlist = [
     discount: 15.0,
     size: 41.0,
     colors: Color(0xFF4CAF50),
+    category: 'Sports',
   ),
   ListProduct(
     id: '3',
@@ -57,6 +62,7 @@ List<ListProduct> productlist = [
     discount: 20.0,
     size: 43.0,
     colors: Color(0xFF795548),
+    category: 'Boots',
   ),
   ListProduct(
     id: '4',
@@ -68,6 +74,7 @@ List<ListProduct> productlist = [
     discount: 5.0,
     size: 40.0,
     colors: Color(0xFFFFC107),
+    category: 'Casual',
   ),
   ListProduct(
     id: '5',
@@ -79,6 +86,7 @@ List<ListProduct> productlist = [
     discount: 12.0,
     size: 38.0,
     colors: Color(0xFFE91E63),
+    category: 'Heels',
   ),
   ListProduct(
     id: '6',
@@ -90,6 +98,7 @@ List<ListProduct> productlist = [
     discount: 8.0,
     size: 41.0,
     colors: Color(0xFF00BCD4),
+    category: 'Sandals',
   ),
   ListProduct(
     id: '7',
@@ -101,6 +110,7 @@ List<ListProduct> productlist = [
     discount: 18.0,
     size: 44.0,
     colors: Color(0xFF607D8B),
+    category: 'Formal',
   ),
   ListProduct(
     id: '8',
@@ -112,6 +122,7 @@ List<ListProduct> productlist = [
     discount: 10.0,
     size: 42.0,
     colors: Color(0xFF9C27B0),
+    category: 'Loafers',
   ),
   ListProduct(
     id: '9',
@@ -123,6 +134,7 @@ List<ListProduct> productlist = [
     discount: 7.0,
     size: 39.0,
     colors: Color(0xFFFF5722),
+    category: 'Sandals',
   ),
   ListProduct(
     id: '10',
@@ -134,6 +146,7 @@ List<ListProduct> productlist = [
     discount: 9.0,
     size: 41.0,
     colors: Color(0xFF3F51B5),
+    category: 'Casual',
   ),
   ListProduct(
     id: '11',
@@ -145,6 +158,7 @@ List<ListProduct> productlist = [
     discount: 14.0,
     size: 42.0,
     colors: Color(0xFF8BC34A),
+    category: 'Sports',
   ),
   ListProduct(
     id: '12',
@@ -156,6 +170,7 @@ List<ListProduct> productlist = [
     discount: 16.0,
     size: 40.0,
     colors: Color(0xFFBDB76B),
+    category: 'Boots',
   ),
   ListProduct(
     id: '13',
@@ -167,6 +182,7 @@ List<ListProduct> productlist = [
     discount: 11.0,
     size: 41.0,
     colors: Color(0xFFCD853F),
+    category: 'Loafers',
   ),
   ListProduct(
     id: '14',
@@ -178,6 +194,7 @@ List<ListProduct> productlist = [
     discount: 13.0,
     size: 39.0,
     colors: Color(0xFF673AB7),
+    category: 'Heels',
   ),
   ListProduct(
     id: '15',
@@ -189,6 +206,7 @@ List<ListProduct> productlist = [
     discount: 6.0,
     size: 37.0,
     colors: Color(0xFFFFB6C1),
+    category: 'Flats',
   ),
   ListProduct(
     id: '16',
@@ -200,6 +218,7 @@ List<ListProduct> productlist = [
     discount: 19.0,
     size: 43.0,
     colors: Color(0xFF6D4C41),
+    category: 'Boots',
   ),
   ListProduct(
     id: '17',
@@ -211,6 +230,7 @@ List<ListProduct> productlist = [
     discount: 8.0,
     size: 40.0,
     colors: Color(0xFFFFE082),
+    category: 'Casual',
   ),
   ListProduct(
     id: '18',
@@ -222,6 +242,7 @@ List<ListProduct> productlist = [
     discount: 17.0,
     size: 42.0,
     colors: Color(0xFF263238),
+    category: 'Formal',
   ),
   ListProduct(
     id: '19',
@@ -233,6 +254,7 @@ List<ListProduct> productlist = [
     discount: 15.0,
     size: 44.0,
     colors: Color(0xFF212121),
+    category: 'Formal',
   ),
   ListProduct(
     id: '20',
@@ -244,5 +266,6 @@ List<ListProduct> productlist = [
     discount: 22.0,
     size: 45.0,
     colors: Color(0xFF388E3C),
+    category: 'Boots',
   ),
 ];
