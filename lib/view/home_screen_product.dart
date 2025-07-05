@@ -1,48 +1,41 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:e_com_app/model/img_list.dart';
 import 'package:e_com_app/model/list_product.dart';
+import 'package:e_com_app/model/model_categories/model_category.dart';
 import 'package:e_com_app/view/product_detail_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreenProduct extends StatefulWidget {
   const HomeScreenProduct({super.key});
-
   @override
   State<HomeScreenProduct> createState() => _HomeScreenProductState();
 }
 
 class _HomeScreenProductState extends State<HomeScreenProduct> {
-  final List<String> imgList = [
-    'https://picsum.photos/id/237/400/200',
-    'https://picsum.photos/id/238/400/200',
-    'https://picsum.photos/id/239/400/200',
-  ];
-  final List<String> categories = [
-    'All',
-    'Nike',
-    'Adidas',
-    'Puma',
-    'Reebok',
-    'New Balance',
-    'Asics',
-    'Under Armour',
-    'Converse',
-    'Vans',
-    'Fila',
-    'Jordan',
-    'Skechers',
-    'Saucony',
-    'Hoka',
-    'Brooks',
-    'Mizuno',
-    'On Running',
-    'Balenciaga',
-    'Yeezy',
-  ];
   bool isSeleted = false;
   int selectedCategoryIndex = 0;
+  List<ListProduct> allProducts = [];
+  List<ListProduct> filteredProducts = [];
+
   @override
+  @override
+void initState() {
+  super.initState();
+  loadProducts();
+}
+
+Future<void> loadProducts() async {
+  // Fetch or assign your allProducts list here
+  allProducts = await productlist;
+
+  // Initially show all products
+  setState(() {
+    filteredProducts = allProducts;
+  });
+}
   Widget build(BuildContext context) {
+    /// new code
     return Scaffold(
       body: Column(
         children: [
@@ -83,7 +76,7 @@ class _HomeScreenProductState extends State<HomeScreenProduct> {
                       .toList(),
             ),
           ),
-          // Track selected index for category
+          // Category filter
           Expanded(
             flex: 1,
             child: ListView.builder(
@@ -94,8 +87,19 @@ class _HomeScreenProductState extends State<HomeScreenProduct> {
                 return InkWell(
                   onTap: () {
                     setState(() {
-                      // Set selected index
                       selectedCategoryIndex = index;
+                      final selectedCategory = categories[index];
+                      // Filter products by category
+                      filteredProducts =
+                          selectedCategory == 'All'
+                              ? allProducts
+                              : allProducts
+                                  .where(
+                                    (productlist) =>
+                                        productlist.category.toLowerCase() == selectedCategory.toLowerCase(),
+                                  )
+                                  .toList();
+                                  print("==========$selectedCategory");
                     });
                   },
                   child: Padding(
@@ -128,8 +132,7 @@ class _HomeScreenProductState extends State<HomeScreenProduct> {
               },
             ),
           ),
-
-          /// grid product
+          // Product grid
           Expanded(
             flex: 11,
             child: Padding(
@@ -139,31 +142,35 @@ class _HomeScreenProductState extends State<HomeScreenProduct> {
               ),
               child: GridView.builder(
                 padding: EdgeInsets.zero,
-                // physics: NeverScrollableScrollPhysics(),
-                itemCount: productlist.length,
+                itemCount: filteredProducts.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, // number of items per row
-                  crossAxisSpacing: 10, // horizontal space between tiles
-                  mainAxisSpacing: 10, // vertical space between tiles
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
                   mainAxisExtent: 250,
                 ),
                 itemBuilder: (context, index) {
-                  final product = productlist[index];
+                  final product = filteredProducts[index];
                   return InkWell(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductDetailScreen(
-                        product: product,
-                      )));
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:
+                              (context) =>
+                                  ProductDetailScreen(product: product),
+                        ),
+                      );
                     },
                     child: Stack(
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.80),
+                            color: Colors.white.withOpacity(0.80),
                             borderRadius: BorderRadius.circular(15),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.grey.withValues(alpha: 0.4),
+                                color: Colors.grey.withOpacity(0.4),
                                 offset: Offset(0, 2),
                                 blurRadius: 0.5,
                                 spreadRadius: 0.2,
@@ -245,7 +252,7 @@ class _HomeScreenProductState extends State<HomeScreenProduct> {
                             width: 35,
                             height: 35,
                             decoration: BoxDecoration(
-                              color: Colors.grey.withValues(alpha: 0.5),
+                              color: Colors.grey.withOpacity(0.5),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Center(

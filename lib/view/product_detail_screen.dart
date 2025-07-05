@@ -14,6 +14,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   bool click = false;
   final List<String> colors = ['red', 'yellow', 'pink', 'grey'];
   final List<int> sizes = [37, 38, 39, 40, 41, 42, 43];
+  int selectedcolors = 0;
+  int selectedsize = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,7 +93,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                       color: Colors.grey,
                                     ),
                                   )
-                                  : Text("Categories"),
+                                  : Text("Descriptions more"),
                         ),
                         IconButton(
                           onPressed: () {
@@ -121,21 +123,37 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             (context, index) => SizedBox(width: 10),
                         itemBuilder: (context, index) {
                           final col = colors[index];
-                          return Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 5,
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Center(
-                              child: Text(
-                                col,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
+                          return InkWell(
+                            onTap: () {
+                              setState(() {
+                                selectedcolors = index;
+                              });
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 5,
+                              ),
+                              decoration: BoxDecoration(
+                                color:
+                                    selectedcolors == index
+                                        ? const Color(0xA756A2FF)
+                                        : Colors.white,
+                                border: Border.all(
+                                  color:
+                                      selectedcolors == index
+                                          ? Colors.white
+                                          : const Color(0xFF050505),
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  col,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
                             ),
@@ -143,7 +161,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         },
                       ),
                     ),
-                    SizedBox(height: 10,),
+                    SizedBox(height: 10),
                     Text("Select size : "),
                     SizedBox(height: 10),
                     SizedBox(
@@ -155,21 +173,37 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             (context, index) => SizedBox(width: 10),
                         itemBuilder: (context, index) {
                           final siz = sizes[index];
-                          return Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 5,
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Center(
-                              child: Text(
-                                "${siz}",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
+                          return InkWell(
+                            onTap: () {
+                              setState(() {
+                                selectedsize = index;
+                              });
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 5,
+                              ),
+                              decoration: BoxDecoration(
+                                color:
+                                    selectedsize == index
+                                        ? const Color(0xA756A2FF)
+                                        : Colors.white,
+                                border: Border.all(
+                                  color:
+                                      selectedsize == index
+                                          ? Colors.grey
+                                          : const Color(0xFFFF5353),
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "${siz}",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
                             ),
@@ -180,6 +214,28 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ],
                 ),
               ),
+            ),
+          ),
+          Positioned(
+            top: 50,
+            left: 10,
+            right: 10,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(onPressed: () {
+                  Navigator.pop(context); /// next back
+                }, icon: Icon(Icons.arrow_back_ios,size: 30,color: Colors.grey,)),
+                Container(
+                  width: 45,height: 45,
+                  decoration: BoxDecoration(color: Colors.grey.withValues(alpha: 0.4),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: Center(
+                    child: Icon(Icons.favorite_outline,size: 25,color: Colors.grey,)
+                  ),
+                ),
+              ],
             ),
           ),
         ],
