@@ -1,4 +1,5 @@
 import 'package:e_com_app/model/list_product.dart';
+import 'package:e_com_app/view/payment_screen.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailScreen extends StatefulWidget {
@@ -16,6 +17,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   final List<int> sizes = [37, 38, 39, 40, 41, 42, 43];
   int selectedcolors = 0;
   int selectedsize = 0;
+  int qty = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,6 +32,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
             ],
           ),
+
+          /// informatoin detail
           Positioned(
             top: 380,
             left: 0,
@@ -53,7 +57,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.only(left: 15, top: 20, right: 15),
+                padding: const EdgeInsets.only(left: 15, top: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -216,6 +220,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
             ),
           ),
+
+          /// appbar
           Positioned(
             top: 50,
             left: 10,
@@ -223,19 +229,175 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(onPressed: () {
-                  Navigator.pop(context); /// next back
-                }, icon: Icon(Icons.arrow_back_ios,size: 30,color: Colors.grey,)),
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+
+                    /// next back
+                  },
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    size: 30,
+                    color: Colors.grey,
+                  ),
+                ),
                 Container(
-                  width: 45,height: 45,
-                  decoration: BoxDecoration(color: Colors.grey.withValues(alpha: 0.4),
+                  width: 45,
+                  height: 45,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withValues(alpha: 0.4),
                     borderRadius: BorderRadius.circular(50),
                   ),
                   child: Center(
-                    child: Icon(Icons.favorite_outline,size: 25,color: Colors.grey,)
+                    child: Icon(
+                      Icons.favorite_outline,
+                      size: 25,
+                      color: Colors.grey,
+                    ),
                   ),
                 ),
               ],
+            ),
+          ),
+
+          Positioned(
+            bottom: 50,
+            left: 10,
+            right: 10,
+            child: Container(
+              height: 50,
+              decoration: BoxDecoration(
+                color: Colors.amber,
+                boxShadow: [
+                  BoxShadow(
+                    offset: Offset(0, 1),
+                    color: Colors.grey.withValues(alpha: 0.6),
+                    blurRadius: 10,
+                    spreadRadius: 0.5,
+                  ),
+                ],
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          width: 30,
+                          height: 30,
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                qty++;
+                              });
+                              print("add");
+                            },
+                            child: Icon(Icons.add, color: Colors.white),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10, right: 10),
+                          child: Text(
+                            "${qty}",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          width: 30,
+                          height: 30,
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                if (qty > 0) {
+                                  qty--;
+                                }
+                              });
+                              print("remove");
+                            },
+                            child: Icon(Icons.remove, color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Text(
+                    "\$${widget.product.price}",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      print("Payment");
+                      if (qty <= 0) {
+                        showAboutDialog(
+                          context: context,
+                          applicationName: 'E-Commerce App',
+                          applicationIcon: Icon(Icons.shopping_cart),
+                          applicationLegalese:
+                              '2025 MyCompany. All rights reserved.',
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 15),
+                              child: Text(
+                                'This app helps you shop your favorite products easily.',
+                              ),
+                            ),
+                          ],
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:
+                                (context) => PaymentScreen(
+                                  product: widget.product,
+                                  qty: qty,
+                                  selectedColor: colors[selectedcolors],
+                                  selectedSize: sizes[selectedsize],
+                                ),
+                          ),
+                        );
+                      }
+                    },
+                    child: Container(
+                      margin: EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      width: 150,
+                      child: Center(
+                        child: Text(
+                          "Payment",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
